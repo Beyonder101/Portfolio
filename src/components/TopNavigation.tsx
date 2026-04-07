@@ -14,7 +14,7 @@ export default function TopNavigation({ visible }: TopNavigationProps) {
 
   return (
     <div 
-      className={`absolute -top-32 left-0 w-full flex items-center justify-center gap-24 md:gap-40 z-[100] transition-all duration-1000 ${visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6 pointer-events-none'}`}
+      className={`absolute -top-32 left-0 w-full flex items-center justify-center gap-32 md:gap-64 z-[100] transition-all duration-1000 ${visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6 pointer-events-none'}`}
     >
       {/* Left side: LinkedIn & Github */}
       <div className="flex gap-4">
@@ -39,7 +39,7 @@ export default function TopNavigation({ visible }: TopNavigationProps) {
       {/* Middle: Index Button */}
       <button 
         onClick={handleIndexClick}
-        className="px-12 py-3 rounded-2xl bg-white/5 backdrop-blur-sm text-amber-50 font-serif tracking-widest text-lg hover:bg-white/10 transition-all shadow-[0_4px_30px_rgba(0,0,0,0.1)] border border-white/5"
+        className="px-20 py-3 rounded-2xl bg-white/5 backdrop-blur-sm text-amber-50 font-serif tracking-widest text-lg hover:bg-white/10 transition-all shadow-[0_4px_30px_rgba(0,0,0,0.1)] border border-white/5"
       >
         INDEX
       </button>
