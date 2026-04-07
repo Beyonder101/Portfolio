@@ -14,7 +14,7 @@ export default function TopNavigation({ visible }: TopNavigationProps) {
 
   return (
     <div 
-      className={`absolute -top-32 left-0 w-full flex items-center justify-center gap-16 md:gap-24 z-[100] transition-all duration-1000 ${visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6 pointer-events-none'}`}
+      className={`absolute -top-32 left-0 w-full flex items-center justify-center gap-24 md:gap-40 z-[100] transition-all duration-1000 ${visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6 pointer-events-none'}`}
     >
       {/* Left side: LinkedIn & Github */}
       <div className="flex gap-4">
