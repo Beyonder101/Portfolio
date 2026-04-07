@@ -77,17 +77,17 @@ export default function SlidePresentation() {
       {/* Navigation Controls */}
       <button 
         onClick={scrollPrev} 
-        className="absolute -left-4 md:-left-12 top-0 w-12 md:w-16 h-full bg-white/5 backdrop-blur-[2px] rounded-2xl flex items-center justify-center transition-all duration-300 hover:bg-white/10 shadow-lg z-50"
+        className="absolute -left-4 md:-left-12 top-0 w-12 md:w-16 h-full bg-white/5 backdrop-blur-[2px] rounded-2xl flex items-center justify-center transition-all duration-300 hover:bg-white/10 shadow-lg z-50 overflow-hidden"
         aria-label="Previous Slide"
       >
-        <Image src="/Arrow Left.svg" alt="Previous" width={40} height={40} className="hover:scale-110 transition-transform" />
+        <Image src="/Arrow Left.svg" alt="Previous" width={60} height={150} className="object-fill w-full h-[20%] scale-150 hover:scale-[1.7] opacity-80 hover:opacity-100 transition-all" />
       </button>
       <button 
         onClick={scrollNext} 
-        className="absolute -right-4 md:-right-12 top-0 w-12 md:w-16 h-full bg-white/5 backdrop-blur-[2px] rounded-2xl flex items-center justify-center transition-all duration-300 hover:bg-white/10 shadow-lg z-50"
+        className="absolute -right-4 md:-right-12 top-0 w-12 md:w-16 h-full bg-white/5 backdrop-blur-[2px] rounded-2xl flex items-center justify-center transition-all duration-300 hover:bg-white/10 shadow-lg z-50 overflow-hidden"
         aria-label="Next Slide"
       >
-        <Image src="/Arrow Right.svg" alt="Next" width={40} height={40} className="hover:scale-110 transition-transform" />
+        <Image src="/Arrow Right.svg" alt="Next" width={60} height={150} className="object-fill w-full h-[20%] scale-150 hover:scale-[1.7] opacity-80 hover:opacity-100 transition-all" />
       </button>
     </div>
   );
