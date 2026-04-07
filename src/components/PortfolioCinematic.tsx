@@ -4,6 +4,7 @@ import { useState, useRef, useEffect } from 'react';
 import gsap from 'gsap';
 import CurtainLoader from './CurtainLoader';
 import SlidePresentation from './SlidePresentation';
+import MughalAnimations from './MughalAnimations';
 import { Volume2, VolumeX } from 'lucide-react';
 
 export default function PortfolioCinematic() {
@@ -14,7 +15,6 @@ export default function PortfolioCinematic() {
   // Refs for animation
   const containerRef = useRef<HTMLDivElement>(null);
   const courtImageRef = useRef<HTMLDivElement>(null);
-  const projectorBeamRef = useRef<SVGPolygonElement>(null);
   const slideContainerRef = useRef<HTMLDivElement>(null);
   const audioRef = useRef<HTMLAudioElement>(null);
 
@@ -40,31 +40,17 @@ export default function PortfolioCinematic() {
       scale: 2.2, 
       transformOrigin: '50% 90%' // Focus tightly on bottom center
     });
-    gsap.set(projectorBeamRef.current, { opacity: 0 });
     gsap.set(slideContainerRef.current, { opacity: 0 });
 
     // 1. 0s-2s: Keep zoomed in focusing on the projector area.
     
-    // 2. 3s: Gear spins & music fades in. 
+    // 2. 3s: Music fades in, we wait 2 seconds.
     tl.to({}, { duration: 3 })
       .add(() => {
         if(audioRef.current) gsap.to(audioRef.current, { volume: 0.6, duration: 2 });
       }, 3);
 
-    // 3. 3s-7s: Projector flicker
-    // We create a fast flicker effect by repeating an opacity tween, ending firmly ON at 7s
-    tl.to(projectorBeamRef.current, {
-      opacity: 0.85,
-      duration: 0.15,
-      yoyo: true,
-      repeat: 26, // 26 * 0.15 ~= 3.9 seconds of flickering
-      ease: "power1.inOut"
-    }, 3);
-    
-    // Ensure beam stays fully on at the end of flicker
-    tl.to(projectorBeamRef.current, { opacity: 0.9, duration: 0.5 }, 7);
-
-    // 4. 7s-8s: Camera zooms out to show full court
+    // 4. 7s-8.5s: Camera zooms out to show full court
     tl.to(courtImageRef.current, {
       scale: 1,
       duration: 1.5,
@@ -88,13 +74,12 @@ export default function PortfolioCinematic() {
     return () => {
       tl.kill();
     };
-  }, [opened]); // Removed isMuted from dependency array to prevent timeline reset
+  }, [opened]); 
 
   return (
     <div className="relative w-full h-screen overflow-hidden bg-[#0A0A0A] text-amber-50">
       {!opened && <CurtainLoader onOpen={() => setOpened(true)} />}
 
-      {/* Put your music file in /public/audio/court-melody.mp3 */}
       <audio ref={audioRef} src="/audio/court-melody.mp3" loop />
 
       {/* Main Orchestrator Viewport */}
@@ -116,7 +101,7 @@ export default function PortfolioCinematic() {
           </div>
           
           {/* Projector Screen Target Area (Top of Court) */}
-          <div className="absolute top-[12%] left-1/2 -translate-x-1/2 w-[85%] md:w-[70%] aspect-[21/9] border-[8px] border-[#8b0000] bg-black rounded-sm z-10 shadow-[0_10px_30px_rgba(0,0,0,0.8)] overflow-hidden">
+          <div className="absolute top-[12%] left-1/2 -translate-x-1/2 w-[85%] md:w-[70%] aspect-[21/9] border-[8px] border-[#8b0000] bg-black rounded-sm z-20 shadow-[0_10px_30px_rgba(0,0,0,0.8)] overflow-hidden">
               {/* Interactive Presentation mounts here */}
               <div 
                 ref={slideContainerRef} 
@@ -126,38 +111,11 @@ export default function PortfolioCinematic() {
               </div>
           </div>
 
-          {/* Projector Machine Target (Bottom Center) */}
-          <div className="absolute bottom-[8%] left-1/2 -translate-x-1/2 w-[120px] h-[60px] bg-neutral-900/80 border border-[#d4af37]/40 rounded-sm flex items-center justify-center z-10 backdrop-blur-sm shadow-xl">
-            <div className="w-10 h-10 rounded-full border-2 border-amber-500/50 animate-[spin_4s_linear_infinite]" />
+          {/* New Ambient Animations overlay (Lanterns, Gears, Pankhas, Beam) */}
+          <div className="absolute inset-0 z-10 pointer-events-none">
+            <MughalAnimations />
           </div>
 
-          {/* Projector Beam SVG overlay */}
-          <svg className="absolute inset-0 w-full h-full z-[5] pointer-events-none drop-shadow-2xl" viewBox="0 0 1000 1000" preserveAspectRatio="none">
-             <defs>
-               <linearGradient id="beamGrad" x1="0" y1="1" x2="0" y2="0">
-                 <stop offset="0%" stopColor="rgba(255, 240, 180, 0.7)" />
-                 <stop offset="30%" stopColor="rgba(255, 230, 150, 0.4)" />
-                 <stop offset="100%" stopColor="rgba(255, 255, 220, 0.05)" />
-               </linearGradient>
-               {/* Dust grain filter for beam */}
-               <filter id="dust">
-                 <feTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="3" result="noise" />
-                 <feColorMatrix type="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 0.15 0" in="noise" result="coloredNoise" />
-                 <feComposite operator="in" in="coloredNoise" in2="SourceGraphic" result="composite" />
-                 <feBlend mode="screen" in="composite" in2="SourceGraphic" />
-               </filter>
-             </defs>
-             {/* 
-                 Trapezoid polygon projecting from bottom center (Projector) 
-                 up to top rectangle (Screen)
-             */}
-             <polygon 
-               ref={projectorBeamRef}
-               points="480,920 520,920 850,120 150,120" 
-               fill="url(#beamGrad)" 
-               filter="url(#dust)"
-             />
-          </svg>
         </div>
       </div>
 
@@ -168,7 +126,7 @@ export default function PortfolioCinematic() {
              setIsMuted(!isMuted);
              if(audioRef.current) audioRef.current.muted = !isMuted;
           }}
-          className="absolute bottom-8 right-8 z-[100] p-4 bg-[#8b0000] text-[#d4af37] rounded-full hover:bg-red-950 transition-all duration-300 shadow-[0_0_20px_rgba(139,0,0,0.5)] border-2 border-[#d4af37] hover:scale-110"
+          className="absolute bottom-8 right-8 z-[100] p-4 bg-[#8b0000] text-[#d4af37] rounded-full hover:bg-red-950 transition-all duration-300 shadow-[0_0_20px_rgba(139,0,0,0.5)] border-2 border-[#d4af37] hover:scale-110 pointer-events-auto"
         >
           {isMuted ? <VolumeX size={24} /> : <Volume2 size={24} />}
         </button>
