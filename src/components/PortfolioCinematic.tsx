@@ -10,6 +10,7 @@ import { Volume2, VolumeX } from 'lucide-react';
 
 export default function PortfolioCinematic() {
   const [opened, setOpened] = useState(false);
+  const [imageLoaded, setImageLoaded] = useState(false);
   const [isMuted, setIsMuted] = useState(false);
   const [showSlides, setShowSlides] = useState(false);
 
@@ -18,9 +19,10 @@ export default function PortfolioCinematic() {
   const audioRef = useRef<HTMLAudioElement>(null);
 
   useEffect(() => {
-    if (!opened) return;
+    if (!opened || !imageLoaded) return;
 
     // Prevent scrolling while cinematic plays
+    document.documentElement.style.overflow = 'hidden';
     document.body.style.overflow = 'hidden';
 
     if (audioRef.current && !isMuted) {
@@ -43,8 +45,9 @@ export default function PortfolioCinematic() {
     const tl = gsap.timeline({
       onComplete: () => {
         setShowSlides(true);
-        // CRITICAL FIX: Unlock scroll after animation
-        document.body.style.overflow = '';
+        // CRITICAL FIX: Unlock scroll natively on both body and documentElement
+        document.documentElement.style.overflow = 'auto';
+        document.body.style.overflow = 'auto';
       }
     });
 
@@ -72,9 +75,10 @@ export default function PortfolioCinematic() {
 
     return () => {
       tl.kill();
-      document.body.style.overflow = '';
+      document.documentElement.style.overflow = 'auto';
+      document.body.style.overflow = 'auto';
     };
-  }, [opened]); 
+  }, [opened, imageLoaded]); 
 
   return (
     <div className="relative w-full h-screen overflow-hidden bg-[#0A0A0A] text-amber-50">
@@ -87,10 +91,15 @@ export default function PortfolioCinematic() {
         <div ref={containerRef} className="relative w-full max-w-[1600px] mx-auto bg-neutral-900 shadow-[0_0_50px_rgba(0,0,0,0.8)]">
           
           {/* Main Background Native Image */}
-          <img src="/images/Background.png" alt="Mughal Court" className="w-full h-auto block" />
+          <img 
+            src="/images/Background.png" 
+            alt="Mughal Court" 
+            className="w-full h-auto block" 
+            onLoad={() => setImageLoaded(true)}
+          />
           
           {/* Projector Screen Target Area (Top of Court) */}
-          <div className="absolute top-[8%] md:top-[10%] left-1/2 -translate-x-1/2 w-[90%] md:w-[75%] max-w-[1200px] z-20 flex flex-col items-center">
+          <div className="absolute top-[8%] md:top-[10%] left-1/2 -translate-x-1/2 w-[80%] md:w-[65%] max-w-[1200px] z-20 flex flex-col items-center">
             
             {/* Top Navigation injected exactly above the Slide frame */}
             <TopNavigation visible={showSlides} />
