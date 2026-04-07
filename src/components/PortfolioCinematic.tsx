@@ -5,6 +5,7 @@ import gsap from 'gsap';
 import CurtainLoader from './CurtainLoader';
 import SlidePresentation from './SlidePresentation';
 import MughalAnimations from './MughalAnimations';
+import TopNavigation from './TopNavigation';
 import { Volume2, VolumeX } from 'lucide-react';
 
 export default function PortfolioCinematic() {
@@ -83,6 +84,8 @@ export default function PortfolioCinematic() {
       <audio ref={audioRef} src="/audio/court-melody.mp3" loop />
 
       {/* Main Orchestrator Viewport */}
+      <TopNavigation visible={showSlides} />
+
       <div 
         ref={containerRef} 
         className="absolute inset-0 w-full h-full flex flex-col items-center justify-start pointer-events-none pt-[10vh]"

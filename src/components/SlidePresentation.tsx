@@ -1,8 +1,8 @@
 'use client';
-import React, { useCallback } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import useEmblaCarousel from 'embla-carousel-react';
 import { slides } from '../data/slides.config';
-import { ChevronLeft, ChevronRight } from 'lucide-react';
+import Image from 'next/image';
 
 export default function SlidePresentation() {
   const [emblaRef, emblaApi] = useEmblaCarousel({ loop: false });
@@ -18,6 +18,12 @@ export default function SlidePresentation() {
   const jumpTo = useCallback((index: number) => {
     if (emblaApi) emblaApi.scrollTo(index);
   }, [emblaApi]);
+
+  useEffect(() => {
+    const handleGoToIndex = () => jumpTo(0);
+    window.addEventListener('goToIndex', handleGoToIndex);
+    return () => window.removeEventListener('goToIndex', handleGoToIndex);
+  }, [jumpTo]);
 
   return (
     <div className="relative w-full h-full overflow-hidden bg-neutral-950 group rounded-sm ring-1 ring-[#d4af37]/30">
@@ -68,20 +74,20 @@ export default function SlidePresentation() {
         </div>
       </div>
       
-      {/* Navigation Controls */}
+      {/* Navigation Controls (20% Blur Glassmorphism) */}
       <button 
         onClick={scrollPrev} 
-        className="absolute left-6 top-1/2 -translate-y-1/2 p-3 bg-black/80 rounded-full border border-[#d4af37]/50 text-[#d4af37] opacity-0 group-hover:opacity-100 transition-all duration-300 hover:scale-110 shadow-2xl hover:bg-[#8b0000]/80"
+        className="absolute left-6 top-1/2 -translate-y-1/2 w-14 h-14 bg-white/5 backdrop-blur-sm rounded-2xl flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300 hover:scale-110 shadow-lg hover:bg-white/10"
         aria-label="Previous Slide"
       >
-        <ChevronLeft size={32} />
+        <Image src="/Arrow Left.svg" alt="Previous" width={28} height={28} />
       </button>
       <button 
         onClick={scrollNext} 
-        className="absolute right-6 top-1/2 -translate-y-1/2 p-3 bg-black/80 rounded-full border border-[#d4af37]/50 text-[#d4af37] opacity-0 group-hover:opacity-100 transition-all duration-300 hover:scale-110 shadow-2xl hover:bg-[#8b0000]/80"
+        className="absolute right-6 top-1/2 -translate-y-1/2 w-14 h-14 bg-white/5 backdrop-blur-sm rounded-2xl flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300 hover:scale-110 shadow-lg hover:bg-white/10"
         aria-label="Next Slide"
       >
-        <ChevronRight size={32} />
+        <Image src="/Arrow Right.svg" alt="Next" width={28} height={28} />
       </button>
     </div>
   );
