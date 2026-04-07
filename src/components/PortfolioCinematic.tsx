@@ -15,8 +15,6 @@ export default function PortfolioCinematic() {
 
   // Refs for animation
   const containerRef = useRef<HTMLDivElement>(null);
-  const courtImageRef = useRef<HTMLDivElement>(null);
-  const slideContainerRef = useRef<HTMLDivElement>(null);
   const audioRef = useRef<HTMLAudioElement>(null);
 
   useEffect(() => {
@@ -30,50 +28,51 @@ export default function PortfolioCinematic() {
       audioRef.current.play().catch(e => console.log('Audio blocked', e));
     }
 
+    // Prepare scroll-based animation
+    const docHeight = document.documentElement.scrollHeight;
+    const viewportHeight = window.innerHeight;
+    const maxScroll = Math.max(0, docHeight - viewportHeight);
+
+    // Setup initial state: Zoomed in to bottom center
+    window.scrollTo(0, maxScroll);
+    gsap.set(containerRef.current, { 
+      scale: 1.4, 
+      transformOrigin: '50% 100%' 
+    });
+
     const tl = gsap.timeline({
       onComplete: () => {
         setShowSlides(true);
+        // CRITICAL FIX: Unlock scroll after animation
+        document.body.style.overflow = '';
       }
     });
 
-    // Setup initial state: Zoomed in to bottom center
-    gsap.set(courtImageRef.current, { 
-      scale: 2.2, 
-      transformOrigin: '50% 90%' // Focus tightly on bottom center
-    });
-    gsap.set(slideContainerRef.current, { opacity: 0 });
-
-    // 1. 0s-2s: Keep zoomed in focusing on the projector area.
-    
-    // 2. 3s: Music fades in, we wait 2 seconds.
+    // 1. Music fades in
     tl.to({}, { duration: 3 })
       .add(() => {
         if(audioRef.current) gsap.to(audioRef.current, { volume: 0.6, duration: 2 });
       }, 3);
 
-    // 4. 7s-8.5s: Camera zooms out to show full court
-    tl.to(courtImageRef.current, {
+    // 2. 6s-7.5s: Camera zooms out to show full court
+    tl.to(containerRef.current, {
       scale: 1,
       duration: 1.5,
       ease: 'power3.inOut'
-    }, 7);
+    }, 6);
 
-    // 5. 8.5s-10s: Camera pans upward to focus precisely on the projector screen
-    tl.to(containerRef.current, {
-      y: '35vh', // Translates the whole viewport down to bring the top screen into view
-      duration: 1.5,
-      ease: 'power3.inOut'
-    }, 8.5);
-
-    // Fade in the interactive slides right at 10s
-    tl.to(slideContainerRef.current, {
-      opacity: 1,
-      duration: 0.8,
-      ease: 'power1.inOut'
-    }, 10);
+    // 3. 7.5s-9.5s: Camera pans upward natively via scroll perfectly syncing to top screen
+    const scrollObj = { y: maxScroll };
+    tl.to(scrollObj, {
+      y: 0,
+      duration: 2,
+      ease: 'power3.inOut',
+      onUpdate: () => window.scrollTo(0, scrollObj.y)
+    }, 7.5);
 
     return () => {
       tl.kill();
+      document.body.style.overflow = '';
     };
   }, [opened]); 
 
@@ -83,39 +82,28 @@ export default function PortfolioCinematic() {
 
       <audio ref={audioRef} src="/audio/court-melody.mp3" loop />
 
-      {/* Main Orchestrator Viewport */}
-      <TopNavigation visible={showSlides} />
-
-      <div 
-        ref={containerRef} 
-        className="absolute inset-0 w-full h-full flex flex-col items-center justify-start pointer-events-none pt-[10vh]"
-      >
-        
-        {/* Court Image Background Panel */}
-        <div 
-          ref={courtImageRef} 
-          className="relative w-full max-w-[1400px] aspect-[4/5] md:aspect-[16/10] bg-neutral-900 mx-auto border-4 border-[#8b0000]/50 shadow-[0_0_50px_rgba(0,0,0,0.8)] overflow-hidden rounded-md"
-        >
-          {/* Real Mughal illustration goes here, spanning full height/width */}
-          <div className="absolute inset-0 flex items-center justify-center flex-col text-amber-600/30 bg-[url('/images/mughal-court.webp')] bg-cover bg-center">
-            <span className="text-xl tracking-widest font-serif border border-amber-600/30 p-4 bg-black/50 backdrop-blur">
-              [ /public/images/mughal-court.webp ]
-            </span>
-          </div>
+      {/* Main Orchestrator Viewport (Native Scroll setup) */}
+      <div className="w-full bg-[#0A0A0A] overflow-x-hidden min-h-screen">
+        <div ref={containerRef} className="relative w-full max-w-[1600px] mx-auto bg-neutral-900 shadow-[0_0_50px_rgba(0,0,0,0.8)]">
+          
+          {/* Main Background Native Image */}
+          <img src="/images/Background.png" alt="Mughal Court" className="w-full h-auto block" />
           
           {/* Projector Screen Target Area (Top of Court) */}
-          <div className="absolute top-[12%] left-1/2 -translate-x-1/2 w-[85%] md:w-[70%] aspect-[21/9] border-[8px] border-[#8b0000] bg-black rounded-sm z-20 shadow-[0_10px_30px_rgba(0,0,0,0.8)] overflow-hidden">
-              {/* Interactive Presentation mounts here */}
-              <div 
-                ref={slideContainerRef} 
-                className={`w-full h-full transition-opacity ${showSlides ? 'pointer-events-auto' : 'pointer-events-none'}`}
-              >
-                 {showSlides && <SlidePresentation />}
-              </div>
+          <div className="absolute top-[8%] md:top-[10%] left-1/2 -translate-x-1/2 w-[90%] md:w-[75%] max-w-[1200px] z-20 flex flex-col items-center">
+            
+            {/* Top Navigation injected exactly above the Slide frame */}
+            <TopNavigation visible={showSlides} />
+
+            {/* Seamless Interactive Presentation Frame without red outline */}
+            <div className={`relative w-full aspect-[21/9] bg-transparent mt-4 transition-all duration-1000 ${showSlides ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8 pointer-events-none'}`}>
+                 <SlidePresentation />
+            </div>
+            
           </div>
 
-          {/* New Ambient Animations overlay (Lanterns, Gears, Pankhas, Beam) */}
-          <div className="absolute inset-0 z-10 pointer-events-none">
+          {/* New Ambient Animations overlay (Lanterns, Gears, Pankhas, Beam) focused on the very bottom portion */}
+          <div className="absolute bottom-0 left-0 w-full aspect-[16/9] z-10 pointer-events-none">
             <MughalAnimations />
           </div>
 

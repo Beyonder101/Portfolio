@@ -77,17 +77,17 @@ export default function SlidePresentation() {
       {/* Navigation Controls (20% Blur Glassmorphism) */}
       <button 
         onClick={scrollPrev} 
-        className="absolute left-6 top-1/2 -translate-y-1/2 w-14 h-14 bg-white/5 backdrop-blur-sm rounded-2xl flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300 hover:scale-110 shadow-lg hover:bg-white/10"
+        className="absolute left-6 top-1/2 -translate-y-1/2 w-32 h-20 bg-white/5 backdrop-blur-sm rounded-2xl flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300 hover:scale-105 shadow-lg hover:bg-white/10"
         aria-label="Previous Slide"
       >
-        <Image src="/Arrow Left.svg" alt="Previous" width={28} height={28} />
+        <Image src="/Arrow Left.svg" alt="Previous" width={40} height={40} />
       </button>
       <button 
         onClick={scrollNext} 
-        className="absolute right-6 top-1/2 -translate-y-1/2 w-14 h-14 bg-white/5 backdrop-blur-sm rounded-2xl flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300 hover:scale-110 shadow-lg hover:bg-white/10"
+        className="absolute right-6 top-1/2 -translate-y-1/2 w-32 h-20 bg-white/5 backdrop-blur-sm rounded-2xl flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300 hover:scale-105 shadow-lg hover:bg-white/10"
         aria-label="Next Slide"
       >
-        <Image src="/Arrow Right.svg" alt="Next" width={28} height={28} />
+        <Image src="/Arrow Right.svg" alt="Next" width={40} height={40} />
       </button>
     </div>
   );
