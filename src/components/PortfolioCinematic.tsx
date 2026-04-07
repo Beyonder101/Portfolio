@@ -8,23 +8,45 @@ import { Volume2, VolumeX } from 'lucide-react';
 export default function PortfolioCinematic() {
   const [imageLoaded, setImageLoaded] = useState(false);
   const [isMuted, setIsMuted] = useState(true); // Default muted since no curtain interaction
+  const [hasInteracted, setHasInteracted] = useState(false);
   const audioRef = useRef<HTMLAudioElement>(null);
 
   // Handle ambient background audio (requires user interaction to unmute cleanly)
   useEffect(() => {
-    if (audioRef.current && !isMuted) {
+    if (audioRef.current && !isMuted && hasInteracted) {
       audioRef.current.volume = 0.5;
-      audioRef.current.play().catch(e => console.log('Audio blocked by browser policy', e));
+      const playPromise = audioRef.current.play();
+      if (playPromise !== undefined) {
+        playPromise.catch(e => console.log('Audio blocked by browser policy', e));
+      }
     } else if (audioRef.current && isMuted) {
       audioRef.current.pause();
     }
-  }, [isMuted]);
+  }, [isMuted, hasInteracted]);
+
+  // Listen for the first document interaction to start music naturally
+  useEffect(() => {
+    const handleFirstInteraction = () => {
+      setHasInteracted(true);
+      setIsMuted(false);
+      window.removeEventListener('click', handleFirstInteraction);
+      window.removeEventListener('scroll', handleFirstInteraction);
+    };
+
+    window.addEventListener('click', handleFirstInteraction, { once: true });
+    window.addEventListener('scroll', handleFirstInteraction, { once: true });
+
+    return () => {
+      window.removeEventListener('click', handleFirstInteraction);
+      window.removeEventListener('scroll', handleFirstInteraction);
+    };
+  }, []);
 
   return (
     <div className="relative w-full min-h-screen overflow-x-hidden bg-[#0A0A0A] text-amber-50">
       
       {/* Background Audio */}
-      <audio ref={audioRef} src="/audio/court-melody.mp3" loop />
+      <audio ref={audioRef} src="/sound/The Mughals - Epic Music.aac" loop />
 
       {/* Main Orchestrator Viewport (Static, Native Scroll) */}
       <div className="w-full bg-[#0A0A0A] overflow-x-hidden min-h-screen">

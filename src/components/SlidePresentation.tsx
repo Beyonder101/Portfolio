@@ -77,14 +77,14 @@ export default function SlidePresentation() {
       {/* Navigation Controls */}
       <button 
         onClick={scrollPrev} 
-        className="absolute -left-20 md:-left-32 top-0 w-16 md:w-24 h-full bg-white/5 backdrop-blur-sm rounded-2xl flex items-center justify-center transition-all duration-300 hover:bg-white/10 shadow-lg"
+        className="absolute -left-4 md:-left-12 top-0 w-12 md:w-16 h-full bg-white/5 backdrop-blur-[2px] rounded-2xl flex items-center justify-center transition-all duration-300 hover:bg-white/10 shadow-lg z-50"
         aria-label="Previous Slide"
       >
         <Image src="/Arrow Left.svg" alt="Previous" width={40} height={40} className="hover:scale-110 transition-transform" />
       </button>
       <button 
         onClick={scrollNext} 
-        className="absolute -right-20 md:-right-32 top-0 w-16 md:w-24 h-full bg-white/5 backdrop-blur-sm rounded-2xl flex items-center justify-center transition-all duration-300 hover:bg-white/10 shadow-lg"
+        className="absolute -right-4 md:-right-12 top-0 w-12 md:w-16 h-full bg-white/5 backdrop-blur-[2px] rounded-2xl flex items-center justify-center transition-all duration-300 hover:bg-white/10 shadow-lg z-50"
         aria-label="Next Slide"
       >
         <Image src="/Arrow Right.svg" alt="Next" width={40} height={40} className="hover:scale-110 transition-transform" />
