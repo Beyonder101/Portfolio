@@ -81,7 +81,7 @@ export default function PortfolioCinematic() {
   }, [opened, imageLoaded]); 
 
   return (
-    <div className="relative w-full h-screen overflow-hidden bg-[#0A0A0A] text-amber-50">
+    <div className="relative w-full min-h-screen overflow-x-hidden bg-[#0A0A0A] text-amber-50">
       {!opened && <CurtainLoader onOpen={() => setOpened(true)} />}
 
       <audio ref={audioRef} src="/audio/court-melody.mp3" loop />
@@ -99,7 +99,7 @@ export default function PortfolioCinematic() {
           />
           
           {/* Projector Screen Target Area (Top of Court) */}
-          <div className="absolute top-[8%] md:top-[10%] left-1/2 -translate-x-1/2 w-[80%] md:w-[65%] max-w-[1200px] z-20 flex flex-col items-center">
+          <div className="absolute top-[12%] md:top-[15%] left-1/2 -translate-x-1/2 w-[80%] md:w-[65%] max-w-[1200px] z-20 flex flex-col items-center">
             
             {/* Top Navigation injected exactly above the Slide frame */}
             <TopNavigation visible={showSlides} />
