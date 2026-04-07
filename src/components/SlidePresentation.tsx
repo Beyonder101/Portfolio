@@ -26,8 +26,8 @@ export default function SlidePresentation() {
   }, [jumpTo]);
 
   return (
-    <div className="relative w-full h-full overflow-hidden bg-neutral-950 group rounded-sm ring-1 ring-[#d4af37]/30">
-      <div className="w-full h-full" ref={emblaRef}>
+    <div className="relative w-full h-full bg-neutral-950 group rounded-sm ring-1 ring-[#d4af37]/30">
+      <div className="overflow-hidden w-full h-full" ref={emblaRef}>
         <div className="flex h-full w-full">
           {slides.map((slide, i) => (
             <div key={slide.id} className="flex-[0_0_100%] min-w-0 relative h-full flex flex-col items-center justify-center p-8 bg-black/50 border-x border-[#d4af37]/10">
