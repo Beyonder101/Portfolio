@@ -2,9 +2,9 @@ export type Slide = {
   id: string;
   title: string;
   subtitle?: string;
-  imagePath: string;        // path in /public/images/slides/
+  imagePath: string;
   type: 'index' | 'work' | 'project' | 'end';
-  jumpLabel?: string;       // shown on index slide nav
+  jumpLabel?: string;
 };
 
 export const slides: Slide[] = [
@@ -12,30 +12,23 @@ export const slides: Slide[] = [
     id: 'index',
     title: 'The Royal Proceedings',
     subtitle: 'Select a chapter',
-    imagePath: '/images/slides/index-slide.webp',
+    imagePath: '/images/slides/Main Website slides.jpg',
     type: 'index',
   },
   {
-    id: 'freelance',
+    id: 'left',
     title: 'Freelance Chronicles',
     subtitle: 'Independent Projects',
-    imagePath: '/images/slides/freelance-book.webp',
+    imagePath: '/images/slides/leftside slide .gif',
     type: 'work',
     jumpLabel: 'Freelance Journey',
   },
   {
-    id: 'work-history',
+    id: 'right',
     title: 'A Chronicle of Service',
     subtitle: 'My Corporate Journey',
-    imagePath: '/images/slides/work-history.webp',
+    imagePath: '/images/slides/right side slide.svg',
     type: 'work',
     jumpLabel: 'Corporate Experience',
-  },
-  {
-    id: 'end',
-    title: 'The Court Adjourns',
-    subtitle: 'Summon me',
-    imagePath: '/images/slides/end-slide.webp',
-    type: 'end',
   },
 ];

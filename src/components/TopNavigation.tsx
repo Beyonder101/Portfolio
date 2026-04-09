@@ -7,59 +7,89 @@ interface TopNavigationProps {
   visible: boolean;
 }
 
+/**
+ * TopNavigation
+ * ─────────────────────────────────────────────────────
+ * Fully fluid — all sizes use vw/% so they scale with
+ * the background image at every viewport width.
+ *
+ * To reposition: change top / left / width below.
+ * ─────────────────────────────────────────────────────
+ */
 export default function TopNavigation({ visible }: TopNavigationProps) {
   const handleIndexClick = () => {
     window.dispatchEvent(new Event('goToIndex'));
   };
 
   return (
-    <div 
-      className={`absolute -top-72 left-0 w-full flex items-center justify-center gap-32 md:gap-64 z-[100] transition-all duration-1000 ${visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6 pointer-events-none'}`}
+    <div
+      className="absolute left-1/2 -translate-x-1/2 z-30"
+      style={{
+        top: '4%',
+        width: '90%',
+        opacity: visible ? 1 : 0,
+        transition: 'opacity 0.9s ease',
+        pointerEvents: visible ? 'auto' : 'none',
+      }}
     >
-      {/* Left side: LinkedIn & Github */}
-      <div className="flex gap-4">
-        <a 
-          href="https://www.linkedin.com/in/beyonder101/" 
-          target="_blank" 
-          rel="noopener noreferrer"
-          className="w-24 h-14 rounded-2xl bg-white/5 backdrop-blur-[2px] flex items-center justify-center hover:bg-white/10 transition-all shadow-[0_4px_30px_rgba(0,0,0,0.1)] border border-white/5"
-        >
-          <Image src="/LinkedIn BW.svg" alt="LinkedIn" width={24} height={24} />
-        </a>
-        <a 
-          href="https://github.com/Beyonder101/Portfolio" 
-          target="_blank" 
-          rel="noopener noreferrer"
-          className="w-24 h-14 rounded-2xl bg-white/5 backdrop-blur-[2px] flex items-center justify-center hover:bg-white/10 transition-all shadow-[0_4px_30px_rgba(0,0,0,0.1)] border border-white/5"
-        >
-          <Image src="/Github BW.svg" alt="GitHub" width={28} height={28} />
-        </a>
-      </div>
-
-      {/* Middle: Index Button */}
-      <button 
-        onClick={handleIndexClick}
-        className="px-32 py-5 rounded-2xl bg-white/5 backdrop-blur-[2px] text-amber-50 font-serif tracking-widest text-lg hover:bg-white/10 transition-all shadow-[0_4px_30px_rgba(0,0,0,0.1)] border border-white/5"
+      <div
+        className="w-full flex items-center justify-between"
+        style={{ gap: '24%' }}
       >
-        INDEX
-      </button>
+        {/* Left — LinkedIn & GitHub */}
+        <div className="flex" style={{ gap: '0.5vw' }}>
+          {[
+            { href: 'https://www.linkedin.com/in/beyonder101/', src: '/LinkedIn BW.svg', alt: 'LinkedIn' },
+            { href: 'https://github.com/Beyonder101/Portfolio', src: '/Github BW.svg', alt: 'GitHub' },
+          ].map(({ href, src, alt }) => (
+            <a
+              key={alt}
+              href={href}
+              target="_blank"
+              rel="noopener noreferrer"
+              title={alt}
+              className="flex items-center justify-center rounded-xl bg-white/5 backdrop-blur-[2px] hover:bg-white/15 transition-all border border-[#d4af37]/30 shadow-md"
+              style={{ width: '5vw', height: '40px', minWidth: '36px', minHeight: '20px' }}
+            >
+              <img src={src} alt={alt} style={{ width: '40px', minWidth: '12px' }} />
+            </a>
+          ))}
+        </div>
 
-      {/* Right side: Gmail & X (Twitter) */}
-      <div className="flex gap-4">
-        <a 
-          href="mailto:himanshupeyush@gmail.com" 
-          className="w-24 h-14 rounded-2xl bg-white/5 backdrop-blur-[2px] flex items-center justify-center hover:bg-white/10 transition-all shadow-[0_4px_30px_rgba(0,0,0,0.1)] border border-white/5"
+        {/* Center — INDEX */}
+        <button
+          onClick={handleIndexClick}
+          className="flex items-center justify-center rounded-xl bg-white/5 backdrop-blur-[2px] text-amber-50 font-serif tracking-widest hover:bg-white/15 transition-all border border-[#d4af37]/30 shadow-md"
+          style={{
+            flex: 1,
+            height: '40px',
+            minHeight: '40px',
+            fontSize: 'clamp(8px, 50px, 40px)',
+            color: 'black',
+          }}
         >
-          <Image src="/Gmail C.svg" alt="Gmail" width={26} height={26} />
-        </a>
-        <a 
-          href="https://twitter.com" // Update when they provide actual x link, leaving generic for now
-          target="_blank" 
-          rel="noopener noreferrer"
-          className="w-24 h-14 rounded-2xl bg-white/5 backdrop-blur-[2px] flex items-center justify-center hover:bg-white/10 transition-all shadow-[0_4px_30px_rgba(0,0,0,0.1)] border border-white/5"
-        >
-          <Image src="/X BW.svg" alt="X (Twitter)" width={22} height={22} />
-        </a>
+          INDEX
+        </button>
+
+        {/* Right — Gmail & X */}
+        <div className="flex" style={{ gap: '0.5vw' }}>
+          {[
+            { href: 'mailto:himanshupeyush@gmail.com', src: '/Gmail C.svg', alt: 'Gmail', target: '_self' },
+            { href: 'https://twitter.com', src: '/X BW.svg', alt: 'X (Twitter)', target: '_blank' },
+          ].map(({ href, src, alt, target }) => (
+            <a
+              key={alt}
+              href={href}
+              target={target}
+              rel="noopener noreferrer"
+              title={alt}
+              className="flex items-center justify-center rounded-xl bg-white/5 backdrop-blur-[2px] hover:bg-white/15 transition-all border border-[#d4af37]/30 shadow-md"
+              style={{ width: '5vw', height: '40px', minWidth: '30px', minHeight: '20px' }}
+            >
+              <img src={src} alt={alt} style={{ width: '40px', minWidth: '11px' }} />
+            </a>
+          ))}
+        </div>
       </div>
     </div>
   );

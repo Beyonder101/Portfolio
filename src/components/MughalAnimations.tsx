@@ -1,103 +1,114 @@
 'use client';
 
 import React from 'react';
+import Image from 'next/image';
 
 export default function MughalAnimations() {
   return (
     <>
-      <style dangerouslySetInnerHTML={{ __html: `
-        @keyframes flicker {
-          0%, 100% { opacity: 1; transform: scale(1); }
-          25% { opacity: 0.8; transform: scale(0.98); }
-          50% { opacity: 0.9; transform: scale(1.02); }
-          75% { opacity: 0.7; transform: scale(0.95); }
-        }
-        @keyframes rotate-cw {
+      <style dangerouslySetInnerHTML={{
+        __html: `
+        @keyframes gear-spin {
           from { transform: rotate(0deg); }
           to { transform: rotate(360deg); }
         }
-        @keyframes rotate-ccw {
-          from { transform: rotate(0deg); }
-          to { transform: rotate(-360deg); }
+        @keyframes beam-pulse {
+          0%, 100% { opacity: 0.15; }
+          50% { opacity: 0.28; }
         }
-        @keyframes pankha-swing {
-          0%, 100% { transform: rotate(-18deg); }
-          50% { transform: rotate(18deg); }
+        @keyframes lamp-flicker {
+          0%, 100% { opacity: 0.95; transform: scale(1); }
+          20% { opacity: 0.4; transform: scale(0.96); }
+          40% { opacity: 0.6; transform: scale(1.03); }
+          60% { opacity: 0.38; transform: scale(0.97); }
+          80% { opacity: 0.58; transform: scale(1.01); }
         }
-        @keyframes pulse-beam {
-          0%, 100% { opacity: 0.4; }
-          50% { opacity: 0.8; }
-        }
-        .anim-lantern {
-          animation: flicker 2s infinite ease-in-out;
-        }
-        .anim-gear-large {
-          animation: rotate-cw 3s linear infinite;
+        .anim-gear {
+          animation: gear-spin 4s linear infinite;
           transform-origin: center;
-        }
-        .anim-gear-small {
-          animation: rotate-ccw 2s linear infinite;
-          transform-origin: center;
-        }
-        .anim-pankha {
-          animation: pankha-swing 1.4s ease-in-out infinite;
-          transform-origin: top center;
+          will-change: transform;
         }
         .anim-beam {
-          animation: pulse-beam 3s ease-in-out infinite;
+          animation: beam-pulse 3s ease-in-out infinite;
+          will-change: opacity;
+        }
+        .anim-lamp-left {
+          animation: lamp-flicker 2.4s ease-in-out infinite;
+          animation-delay: 0s;
+          will-change: opacity, transform;
+        }
+        .anim-lamp-right {
+          animation: lamp-flicker 2.4s ease-in-out infinite;
+          animation-delay: 0.7s;
+          will-change: opacity, transform;
         }
       `}} />
 
-      {/* Note: All positions (top/left/bottom/right) are relative to the parent container which should represent the image aspect ratio */}
-      
-      {/* Lanterns */}
-      <div 
-        className="absolute anim-lantern rounded-full" 
-        style={{ top: '7.5%', left: '16%', width: '28px', height: '28px', background: 'radial-gradient(circle, rgba(255,215,0,0.8) 0%, rgba(255,215,0,0) 70%)', animationDelay: '0s' }} 
-      />
-      <div 
-        className="absolute anim-lantern rounded-full" 
-        style={{ top: '7.5%', right: '16%', width: '28px', height: '28px', background: 'radial-gradient(circle, rgba(255,215,0,0.8) 0%, rgba(255,215,0,0) 70%)', animationDelay: '300ms' }} 
+      {/* Corner lamp dim effect - top-left */}
+      <div
+        className="absolute pointer-events-none anim-lamp-left"
+        style={{
+          top: 0,
+          left: 0,
+          width: '22%',
+          height: '30%',
+          background: 'radial-gradient(ellipse at 0% 0%, rgba(255,200,80,0.18) 0%, transparent 70%)',
+        }}
       />
 
-      {/* Gears SVG */}
-      <div className="absolute -translate-x-1/2" style={{ bottom: '28%', left: '50%', width: '40px', height: '40px' }}>
-        <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-full drop-shadow-[0_0_2px_rgba(184,134,11,0.5)]">
-           <circle cx="20" cy="20" r="9" stroke="#B8860B" strokeWidth="2" strokeDasharray="4 2" className="anim-gear-large" />
-           <circle cx="28" cy="12" r="6" stroke="#B8860B" strokeWidth="1.5" strokeDasharray="3 2" className="anim-gear-small" />
-        </svg>
-      </div>
-
-      {/* Pankha Fans */}
-      {/* 1st Fan */}
-      <div className="absolute anim-pankha drop-shadow-[0_4px_6px_rgba(0,0,0,0.3)]" style={{ bottom: '34%', right: '24%', width: '30px', height: '80px', animationDelay: '0s' }}>
-        <svg viewBox="0 0 30 80" className="w-full h-full">
-           <line x1="15" y1="0" x2="15" y2="40" stroke="#8b4513" strokeWidth="2" />
-           <ellipse cx="15" cy="60" rx="15" ry="20" fill="rgba(184,134,11,0.85)" stroke="#663300" strokeWidth="1" />
-        </svg>
-      </div>
-      
-      {/* 2nd Fan */}
-      <div className="absolute anim-pankha drop-shadow-[0_4px_6px_rgba(0,0,0,0.3)]" style={{ bottom: '34%', right: '18%', width: '30px', height: '80px', animationDelay: '0.2s' }}>
-        <svg viewBox="0 0 30 80" className="w-full h-full">
-           <line x1="15" y1="0" x2="15" y2="40" stroke="#8b4513" strokeWidth="2" />
-           <ellipse cx="15" cy="60" rx="15" ry="20" fill="rgba(184,134,11,0.85)" stroke="#663300" strokeWidth="1" />
-        </svg>
-      </div>
-
-      {/* Projector Beam */}
-      <div 
-        className="absolute -translate-x-1/2 anim-beam mix-blend-screen pointer-events-none" 
-        style={{ 
-          bottom: '28%', 
-          left: '50%', 
-          width: '60px', 
-          height: '180px',
-          background: 'linear-gradient(to top, transparent 0%, rgba(255,200,0,0.4) 100%)',
-          clipPath: 'polygon(20% 100%, 80% 100%, 100% 0%, 0% 0%)',
-          transformOrigin: 'bottom center',
-        }} 
+      {/* Corner lamp dim effect - top-right */}
+      <div
+        className="absolute pointer-events-none anim-lamp-right"
+        style={{
+          top: 0,
+          right: 0,
+          width: '22%',
+          height: '30%',
+          background: 'radial-gradient(ellipse at 100% 0%, rgba(255,200,80,0.18) 0%, transparent 70%)',
+        }}
       />
+
+      {/* Projector soft light cone — from machine up to the wall/screen */}
+      <div
+        className="absolute pointer-events-none anim-beam"
+        style={{
+          /* Machine sits ~58% from top, slightly right of center (~53%) */
+          top: '30%',
+          left: '50%',
+          transform: 'translateX(-52%)',
+          width: '48%',
+          height: '30%',
+          background: 'linear-gradient(to top, rgba(255,220,100,0.25) 0%, rgba(255,220,100,0.07) 70%, transparent 100%)',
+          clipPath: 'polygon(38% 100%, 62% 100%, 100% 0%, 0% 0%)',
+          mixBlendMode: 'screen',
+        }}
+      />
+
+      {/* Spinning gear wheel — on the projector machine wheel on the table,
+          just right of and below the presenter's laptop */}
+      <div
+        className="absolute"
+        style={{
+          top: '82%',
+          left: '58.6%',
+          transform: 'translate(-50%, -50%)',
+          width: '3.5%',
+          minWidth: '28px',
+          maxWidth: '46px',
+          aspectRatio: '1',
+          zIndex: 10,
+        }}
+      >
+        <div className="anim-gear w-full h-full relative">
+          <Image
+            src="/images/Gear-wheel.jpg"
+            alt="Projector gear"
+            fill
+            className="object-contain rounded-full"
+            style={{ mixBlendMode: 'multiply', opacity: 0.88 }}
+          />
+        </div>
+      </div>
     </>
   );
 }
