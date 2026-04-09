@@ -17,15 +17,6 @@ export default function PortfolioCinematic() {
   const navRef = useRef<HTMLDivElement>(null);
   const screenRef = useRef<HTMLDivElement>(null);
 
-  // Attempt music on mount — browser will block without gesture, that's fine
-  useEffect(() => {
-    const audio = audioRef.current;
-    if (!audio) return;
-    audio.volume = 0.4;
-    audio.loop = true;
-    audio.play().catch(() => {});
-  }, []);
-
   // Sync mute toggle
   useEffect(() => {
     const audio = audioRef.current;
@@ -37,11 +28,19 @@ export default function PortfolioCinematic() {
     }
   }, [isMuted]);
 
-  // Called when curtain animation finishes
-  const handleCurtainOpen = () => {
-    if (audioRef.current && !isMuted) {
-      audioRef.current.play().catch(() => {});
+  // Called INSTANTLY on curtain button click — this IS the user gesture so audio works
+  const handleAudioStart = () => {
+    const audio = audioRef.current;
+    if (!audio) return;
+    audio.volume = 0.4;
+    audio.loop = true;
+    if (!isMuted) {
+      audio.play().catch(() => {});
     }
+  };
+
+  // Called when curtain animation finishes (1.7s after click)
+  const handleCurtainOpen = () => {
 
     const viewport = viewportRef.current;
     const nav = navRef.current;
@@ -95,7 +94,7 @@ export default function PortfolioCinematic() {
       <audio ref={audioRef} src="/sound/The Mughals - Epic Music.aac" loop />
 
       {/* Curtain overlay */}
-      {!curtainDone && <CurtainLoader onOpen={handleCurtainOpen} />}
+      {!curtainDone && <CurtainLoader onButtonClick={handleAudioStart} onOpen={handleCurtainOpen} />}
 
       {/* Scrollable viewport — GSAP pans this from bottom to top */}
       <div
