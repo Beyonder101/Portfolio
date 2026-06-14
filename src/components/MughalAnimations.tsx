@@ -3,10 +3,9 @@
 import React from 'react';
 
 export default function MughalAnimations() {
-    return (
-          <>
-                <style dangerouslySetInnerHTML={{
-                    __html: `
+      return (
+              <>
+                    <style dangerouslySetInnerHTML={{ __html: `
                             @keyframes beam-pulse {
                                       0%, 100% { opacity: 0.15; }
                                                 50% { opacity: 0.28; }
@@ -18,61 +17,49 @@ export default function MughalAnimations() {
                                                                                                         60% { opacity: 0.38; transform: scale(0.97); }
                                                                                                                   80% { opacity: 0.58; transform: scale(1.01); }
                                                                                                                           }
-                                                                                                                                  .anim-beam {
-                                                                                                                                            animation: beam-pulse 3s ease-in-out infinite;
-                                                                                                                                                      will-change: opacity;
-                                                                                                                                                              }
-                                                                                                                                                                      .anim-lamp-left {
-                                                                                                                                                                                animation: lamp-flicker 2.4s ease-in-out infinite;
-                                                                                                                                                                                          animation-delay: 0s;
-                                                                                                                                                                                                    will-change: opacity, transform;
-                                                                                                                                                                                                            }
-                                                                                                                                                                                                                    .anim-lamp-right {
-                                                                                                                                                                                                                              animation: lamp-flicker 2.4s ease-in-out infinite;
-                                                                                                                                                                                                                                        animation-delay: 0.7s;
-                                                                                                                                                                                                                                                  will-change: opacity, transform;
-                                                                                                                                                                                                                                                          }
-                                                                                                                                                                                                                                                                `}} />
-          
-            {/* Corner lamp dim effect - top-left */}
-                <div
-                          className="absolute pointer-events-none anim-lamp-left"
-                          style={{
-                                      top: 0,
-                                      left: 0,
-                                      width: '22%',
-                                      height: '30%',
-                                      background: 'radial-gradient(ellipse at 0% 0%, rgba(255,200,80,0.18) 0%, transparent 70%)',
-                          }}
-                        />
-          
-            {/* Corner lamp dim effect - top-right */}
-                <div
-                          className="absolute pointer-events-none anim-lamp-right"
-                          style={{
-                                      top: 0,
-                                      right: 0,
-                                      width: '22%',
-                                      height: '30%',
-                                      background: 'radial-gradient(ellipse at 100% 0%, rgba(255,200,80,0.18) 0%, transparent 70%)',
-                          }}
-                        />
-          
-            {/* Projector soft light cone */}
-                <div
-                          className="absolute pointer-events-none anim-beam"
-                          style={{
-                                      top: '30%',
-                                      left: '50%',
-                                      transform: 'translateX(-52%)',
-                                      width: '48%',
-                                      height: '30%',
-                                      background: 'linear-gradient(to top, rgba(255,220,100,0.25) 0%, rgba(255,220,100,0.07) 70%, transparent 100%)',
-                                      clipPath: 'polygon(38% 100%, 62% 100%, 100% 0%, 0% 0%)',
-                                      mixBlendMode: 'screen',
-                          }}
-                        />
-          </>>
-        );
+                                                                                                                                  .anim-beam { animation: beam-pulse 3s ease-in-out infinite; will-change: opacity; }
+                                                                                                                                          .anim-lamp-left { animation: lamp-flicker 2.4s ease-in-out infinite; animation-delay: 0s; will-change: opacity, transform; }
+                                                                                                                                                  .anim-lamp-right { animation: lamp-flicker 2.4s ease-in-out infinite; animation-delay: 0.7s; will-change: opacity, transform; }
+                                                                                                                                                        `}} />
+              
+                  {/* Corner lamp dim effect - top-left */}
+                    <div
+                                className="absolute pointer-events-none anim-lamp-left"
+                                style={{
+                                              top: 0,
+                                              left: 0,
+                                              width: '22%',
+                                              height: '30%',
+                                              background: 'radial-gradient(ellipse at 0% 0%, rgba(255,200,80,0.18) 0%, transparent 70%)',
+                                }}
+                              />
+              
+                  {/* Corner lamp dim effect - top-right */}
+                    <div
+                                className="absolute pointer-events-none anim-lamp-right"
+                                style={{
+                                              top: 0,
+                                              right: 0,
+                                              width: '22%',
+                                              height: '30%',
+                                              background: 'radial-gradient(ellipse at 100% 0%, rgba(255,200,80,0.18) 0%, transparent 70%)',
+                                }}
+                              />
+              
+                  {/* Projector soft light cone */}
+                    <div
+                                className="absolute pointer-events-none anim-beam"
+                                style={{
+                                              top: '30%',
+                                              left: '50%',
+                                              transform: 'translateX(-52%)',
+                                              width: '48%',
+                                              height: '30%',
+                                              background: 'linear-gradient(to top, rgba(255,220,100,0.25) 0%, rgba(255,220,100,0.07) 70%, transparent 100%)',
+                                              clipPath: 'polygon(38% 100%, 62% 100%, 100% 0%, 0% 0%)',
+                                              mixBlendMode: 'screen',
+                                }}
+                              />
+              </>
+              );
 }
-</>
