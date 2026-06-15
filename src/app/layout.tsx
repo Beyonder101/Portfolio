@@ -1,13 +1,13 @@
 import type { Metadata } from 'next';
-import { Open_Sans } from 'next/font/google';
 import { SpeedInsights } from '@vercel/speed-insights/next';
 import './globals.css';
 
-const openSans = Open_Sans({ subsets: ['latin'] });
-
 export const metadata: Metadata = {
-  title: 'Himanshu Saini | Royal Portfolio',
-  description: 'Product Manager Portfolio',
+  title: 'Himanshu Saini — Product Manager',
+  description: "Product manager & freelance strategist. I build things that don't need explaining.",
+  icons: {
+    icon: '/favicon.svg',
+  },
 };
 
 export default function RootLayout({
@@ -17,7 +17,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={`${openSans.className} bg-black antialiased text-amber-50`}>
+      <body>
         {children}
         <SpeedInsights />
       </body>
