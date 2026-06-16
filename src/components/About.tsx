@@ -3,8 +3,8 @@ const SKILLS = [
   'User Research',
   'Data & Analytics',
   'Delivery',
-  'Stakeholders',
-  'Freelance',
+  'Stakeholder Management',
+  'Freelance & Consulting',
 ];
 
 export default function About() {
@@ -66,26 +66,10 @@ export default function About() {
             I don&apos;t just ship features — I ship outcomes.
           </blockquote>
           <p style={{ fontSize: 14, lineHeight: 1.8, color: 'var(--text-muted)', margin: '0 0 32px' }}>
-            5+ years across product, strategy, and freelance. I&apos;ve worked with early-stage
-            startups and large corporates — the problems are different, the craft is the same.
+            Creative by training, strategic by choice. I&apos;ve spent 5+ years working across
+            design, product, and freelance — from building apps for dairy startups to shipping game
+            engines. I bring the maker&apos;s perspective to every product decision.
           </p>
-          <a
-            href="#"
-            className="btn-hover"
-            style={{
-              display: 'inline-block',
-              padding: '14px 28px',
-              background: '#1B3A2D',
-              color: '#F3EFE5',
-              fontSize: 13,
-              fontWeight: 600,
-              letterSpacing: '0.02em',
-              borderRadius: 8,
-              textDecoration: 'none',
-            }}
-          >
-            Download CV
-          </a>
         </div>
 
         <div

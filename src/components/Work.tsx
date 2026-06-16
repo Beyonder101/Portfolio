@@ -1,27 +1,27 @@
 const PROJECTS = [
   {
     number: '01',
-    tag: 'Freelance',
-    name: 'Brand & Strategy — Client A',
-    description: 'Go-to-market strategy, roadmap, launch',
+    tag: 'Corporate',
+    name: 'Hara',
+    description: 'Delivered end-to-end digital art production and client mock-ups for a Delhi-based design studio',
   },
   {
     number: '02',
     tag: 'Corporate',
-    name: 'Product Overhaul — Company B',
-    description: 'Led full product redesign, 0→1 feature build',
+    name: 'Cremeway Dairy Farms',
+    description: 'Designed a big-basket-style e-commerce app for a dairy startup, from concept to client sign-off',
   },
   {
     number: '03',
     tag: 'Freelance',
-    name: 'Growth Systems — Client C',
-    description: 'Retention flows, analytics, experimentation',
+    name: 'Evidyaloka',
+    description: 'Conceptualized and produced a full coffee table book for an education nonprofit',
   },
   {
     number: '04',
-    tag: 'Corporate',
-    name: 'Platform Scaling — Company D',
-    description: 'Cross-functional delivery, OKRs, stakeholders',
+    tag: 'Freelance',
+    name: 'Brand Creative',
+    description: 'Social media campaigns and standee posters for Alienware, Canon, Godrej, and Google Pixel',
   },
 ];
 
